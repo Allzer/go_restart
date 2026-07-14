@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func main() {
 	var a int = 3
@@ -18,3 +20,4 @@ func main() {
 	var e rune = 'A'
 	fmt.Println(e)
 }
+
