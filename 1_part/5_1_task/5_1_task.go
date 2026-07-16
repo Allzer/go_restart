@@ -3,13 +3,13 @@ package main
 import "fmt"
 
 func main() {
-	listNumbers := []int{12, 132, 3, 4, 5, 6}
-	bybbleSort(listNumbers)
-	fmt.Println(listNumbers)
+	var arr = []int{4, 5, 321, 76, 5, 4, 123, 4, 5, 6}
+
+	bybbleSort(arr)
+	fmt.Println(arr)
 }
 
 func bybbleSort(arr []int) {
-
 	n := len(arr)
 
 	for i := 0; i < n-1; i++ {
