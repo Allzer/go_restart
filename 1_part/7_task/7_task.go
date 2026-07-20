@@ -66,7 +66,7 @@ func countSymbols(str string) StringStats {
 			continue
 		}
 
-		if unicode.IsDigit(symbol) {
+		if unicode.IsDigit(symbol) { //проверяет является ли символ десятичной цифрой
 			stats.Number++
 			continue
 		}
