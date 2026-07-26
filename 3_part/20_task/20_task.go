@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"restart/3_part/calc"
+	"go_restart/3_part/calc"
 )
 
 func main() {
