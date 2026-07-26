@@ -9,7 +9,7 @@ type User struct {
 	UserName   string
 	SurName    string
 	Patronymic string
-	Orders    []order.Order
+	Orders     order.Order
 }
 
 func (user *User) PrintUserInfo() {
@@ -24,12 +24,15 @@ func (user *User) PrintUserInfo() {
 
 }
 
-func (user *User) GetOrder() []order.Order {
-	fmt.Println(user.Orders[:])
-	return user.Orders[:]
+func (user *User) GetOrder() order.Order {
+	fmt.Println(user.Orders)
+	return user.Orders
 }
 
 func (user *User) CreateOrder() {
-	user.Orders = append(user.Orders, order.Order{})
-	fmt.Println(user.Orders)
+	user.Orders = order.NewOrder()
+}
+
+func (user *User) AddBaseOrder() {
+	user.Orders = order.CreateBaseOrder(user.Orders)
 }

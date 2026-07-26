@@ -11,15 +11,20 @@ func main() {
 		SurName:    "Shapkro",
 		Patronymic: "Serg",
 	}
-	// user.CreateOrder()
 
-	Menu:
+Menu:
 	for {
 		param := getMenu()
 		switch param {
 		case 1:
 			user.PrintUserInfo()
+		case 2:
+			user.GetOrder()
+		case 3:
+			user.CreateOrder()
 		case 4:
+			user.AddBaseOrder()
+		case 5:
 			break Menu
 		}
 	}
@@ -29,11 +34,14 @@ func getMenu() int {
 	var param int
 	fmt.Println(
 		`
+		------------------------------------
 		Выберите действие с заказом:
 		- 1 Просмотр информации пользователя
 		- 2 Просмотр списка заказов
 		- 3 Создать заказ
-		- 4 Выход
+		- 4 Добавить Базовый заказ
+		- 5 Выход
+		------------------------------------
 		`)
 	fmt.Scan(&param)
 	return param
