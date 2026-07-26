@@ -36,3 +36,7 @@ func (user *User) CreateOrder() {
 func (user *User) AddBaseOrder() {
 	user.Orders = order.CreateBaseOrder(user.Orders)
 }
+
+func (user *User) chooseProduct() {
+	
+}
