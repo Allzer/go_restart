@@ -25,11 +25,7 @@ func (user *User) PrintUserInfo() {
 }
 
 func (user *User) GetOrder() {
-	fmt.Println(user.Orders)
-}
-
-func (user *User) CreateOrder() {
-	user.Orders = order.NewOrder()
+	fmt.Printf("Заказ номер %d на сумму %.2f получил статус %s", user.Orders.ID, user.Orders.TotalPrice, user.Orders.Status)
 }
 
 func (user *User) AddBaseOrder() {
@@ -38,4 +34,8 @@ func (user *User) AddBaseOrder() {
 
 func (user *User) СhooseProduct() {
 	user.Orders = order.ChooseProduct(user.Orders)
+}
+
+func (user *User) CompleteOrder() {
+	user.Orders = order.CompleteOrder(user.Orders)
 }

@@ -13,51 +13,44 @@ type Order struct {
 	Products   []product.Product
 }
 
-func NewOrder() Order {
-	return Order{
-		TotalPrice: 0.0,
-		Status:     "Define",
-		ID:         rand.Intn(999),
-	}
-}
-
 func CreateBaseOrder(order Order) Order {
-	baseProductList := product.CreateProductList()
+	baseProductList := product.GetProductList()
 	for _, v := range baseProductList {
 		order.TotalPrice += v.Price
 	}
 	order.ID = rand.Intn(999)
-	order.Status = "Complited"
+	order.Status = "Ожидает подтверждения"
 	order.Products = baseProductList
 	return order
 }
 
 func ChooseProduct(order Order) Order {
-	baseProductList := product.CreateProductList()
+	baseProductList := product.GetProductList()
 	order.ID = rand.Intn(99999)
-	Menu:
+Menu:
 	for {
 		param := getMenu()
 		switch param {
-		case 1:
-			order.Products = append(order.Products, baseProductList[0])
-			order.TotalPrice += baseProductList[0].Price
-		case 2:
-			order.Products = append(order.Products, baseProductList[1])
-			order.TotalPrice += baseProductList[1].Price
-		case 3:
-			order.Products = append(order.Products, baseProductList[2])
-			order.TotalPrice += baseProductList[2].Price
-		case 4:
-			order.Products = append(order.Products, baseProductList[3])
-			order.TotalPrice += baseProductList[3].Price
-		case 5:
-			order.Products = append(order.Products, baseProductList[4])
-			order.TotalPrice += baseProductList[4].Price
 		case 6:
+			order.Status = "Ожидает подтверждения"
 			break Menu
 		}
+		if param > 1 && param < 6 {
+			addProductInOrder(&order, baseProductList[param-1])
+		}else {
+			fmt.Println("Такого пункта нет в меню")
+		}
 	}
+	return order
+}
+
+func addProductInOrder(order *Order, product product.Product) {
+	order.Products = append(order.Products, product)
+	order.TotalPrice += product.Price
+}
+
+func CompleteOrder(order Order) Order {
+	order.Status = "Завершён"
 	return order
 }
 

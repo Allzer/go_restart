@@ -5,7 +5,7 @@ type Product struct {
 	Price float32
 }
 
-func CreateProductList() []Product {
+func GetProductList() []Product {
 	var productList []Product
 	productList = append(productList,
 		Product{
