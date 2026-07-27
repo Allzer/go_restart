@@ -13,35 +13,33 @@ type Order struct {
 	Products   []product.Product
 }
 
-func CreateBaseOrder(order Order) Order {
+func (o *Order) AddBaseOrder() {
 	baseProductList := product.GetProductList()
 	for _, v := range baseProductList {
-		order.TotalPrice += v.Price
+		o.TotalPrice += v.Price
 	}
-	order.ID = rand.Intn(99999)
-	order.Status = "Ожидает подтверждения"
-	order.Products = baseProductList
-	return order
+	o.ID = rand.Intn(99999)
+	o.Status = "Ожидает подтверждения"
+	o.Products = baseProductList
 }
 
-func ChooseProduct(order Order) Order {
+func (o *Order)ChooseProduct() {
 	baseProductList := product.GetProductList()
-	order.ID = rand.Intn(99999)
+	o.ID = rand.Intn(99999)
 Menu:
 	for {
 		param := getMenu()
 		switch param {
 		case 6:
-			order.Status = "Ожидает подтверждения"
+			o.Status = "Ожидает подтверждения"
 			break Menu
 		}
 		if param > 0 && param < 6 {
-			addProductInOrder(&order, baseProductList[param-1])
-		}else {
+			addProductInOrder(o, baseProductList[param-1])
+		} else {
 			fmt.Println("Такого пункта нет в меню")
 		}
 	}
-	return order
 }
 
 func addProductInOrder(order *Order, product product.Product) {
@@ -49,9 +47,8 @@ func addProductInOrder(order *Order, product product.Product) {
 	order.TotalPrice += product.Price
 }
 
-func CompleteOrder(order Order) Order {
-	order.Status = "Завершён"
-	return order
+func (o *Order) CompleteOrder() {
+	o.Status = "Завершён"
 }
 
 func getMenu() int {

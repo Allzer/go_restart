@@ -19,18 +19,20 @@ Menu:
 		case 1:
 			user.PrintUserInfo()
 		case 2:
-			user.СhooseProduct()
 			user.GetOrder()
 		case 3:
-			user.AddBaseOrder()
+			user.Orders.ChooseProduct()
 			user.GetOrder()
 		case 4:
-			user.CompleteOrder()
+			user.Orders.AddBaseOrder()
 			user.GetOrder()
 		case 5:
+			user.Orders.CompleteOrder()
 			user.GetOrder()
-			user.CreateNewOrder()
 		case 6:
+			user.CreateNewOrder()
+			user.GetOrder()
+		case 7:
 			break Menu
 		}
 	}
@@ -43,11 +45,12 @@ func getMenu() int {
 		------------------------------------
 		Выберите действие с заказом:
 		- 1 Просмотр информации пользователя
-		- 2 Выбрать продукты и добавить их в заказ
-		- 3 Добавить Базовый заказ
-		- 4 Завершить заказ
-		- 5 Создать новый заказ
-		- 6 Выход
+		- 2 Просмотреть информацию о заказе
+		- 3 Выбрать продукты и добавить их в заказ
+		- 4 Добавить Базовый заказ
+		- 5 Завершить заказ
+		- 6 Очистить заказ
+		- 7 Выход
 		------------------------------------
 		`)
 	fmt.Scan(&param)
