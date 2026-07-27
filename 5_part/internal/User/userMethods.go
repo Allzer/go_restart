@@ -24,9 +24,8 @@ func (user *User) PrintUserInfo() {
 
 }
 
-func (user *User) GetOrder() order.Order {
+func (user *User) GetOrder() {
 	fmt.Println(user.Orders)
-	return user.Orders
 }
 
 func (user *User) CreateOrder() {
@@ -37,6 +36,6 @@ func (user *User) AddBaseOrder() {
 	user.Orders = order.CreateBaseOrder(user.Orders)
 }
 
-func (user *User) chooseProduct() {
-	
+func (user *User) СhooseProduct() {
+	user.Orders = order.ChooseProduct(user.Orders)
 }

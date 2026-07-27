@@ -32,24 +32,31 @@ func CreateBaseOrder(order Order) Order {
 	return order
 }
 
-func chooseProduct(order Order) Order {
+func ChooseProduct(order Order) Order {
 	baseProductList := product.CreateProductList()
-
-	param := getMenu()
+	order.ID = rand.Intn(99999)
 	Menu:
-	switch param {
-	case 1:
-		order.Products = append(order.Products, baseProductList[0])
-	case 2:
-		order.Products = append(order.Products, baseProductList[1])
-	case 3:
-		order.Products = append(order.Products, baseProductList[2])
-	case 4:
-		order.Products = append(order.Products, baseProductList[3])
-	case 5:
-		order.Products = append(order.Products, baseProductList[4])
-	case 6:
-		break Menu
+	for {
+		param := getMenu()
+		switch param {
+		case 1:
+			order.Products = append(order.Products, baseProductList[0])
+			order.TotalPrice += baseProductList[0].Price
+		case 2:
+			order.Products = append(order.Products, baseProductList[1])
+			order.TotalPrice += baseProductList[1].Price
+		case 3:
+			order.Products = append(order.Products, baseProductList[2])
+			order.TotalPrice += baseProductList[2].Price
+		case 4:
+			order.Products = append(order.Products, baseProductList[3])
+			order.TotalPrice += baseProductList[3].Price
+		case 5:
+			order.Products = append(order.Products, baseProductList[4])
+			order.TotalPrice += baseProductList[4].Price
+		case 6:
+			break Menu
+		}
 	}
 	return order
 }
@@ -65,7 +72,7 @@ func getMenu() int {
 		- 3 Макароны - 45.26р
 		- 4 Соль - 17.34р
 		- 5 Сахарок - 67.69р
-		- 6 Не выбирать продукт
+		- 6 Закончить выбор продуктов
 		------------------------------------
 		`)
 	fmt.Scan(&param)
