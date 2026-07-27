@@ -18,7 +18,7 @@ func CreateBaseOrder(order Order) Order {
 	for _, v := range baseProductList {
 		order.TotalPrice += v.Price
 	}
-	order.ID = rand.Intn(999)
+	order.ID = rand.Intn(99999)
 	order.Status = "Ожидает подтверждения"
 	order.Products = baseProductList
 	return order
@@ -35,7 +35,7 @@ Menu:
 			order.Status = "Ожидает подтверждения"
 			break Menu
 		}
-		if param > 1 && param < 6 {
+		if param > 0 && param < 6 {
 			addProductInOrder(&order, baseProductList[param-1])
 		}else {
 			fmt.Println("Такого пункта нет в меню")

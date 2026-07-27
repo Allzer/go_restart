@@ -39,3 +39,7 @@ func (user *User) СhooseProduct() {
 func (user *User) CompleteOrder() {
 	user.Orders = order.CompleteOrder(user.Orders)
 }
+
+func (user *User) CreateNewOrder() {
+	user.Orders = order.Order{}
+}
