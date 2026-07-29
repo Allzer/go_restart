@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"go_restart/5_part/internal/User"
+	"go_restart/5_part/internal/notifier"
 )
 
 func main() {
@@ -11,6 +12,8 @@ func main() {
 		SurName:    "Shapkro",
 		Patronymic: "Serg",
 	}
+
+	var notifierService notifier.Notifier = notifier.EmailNotifier{}
 
 Menu:
 	for {
@@ -28,7 +31,7 @@ Menu:
 			user.GetOrder()
 		case 5:
 			user.Order.CompleteOrder()
-			user.GetOrder()
+			notifierService.Notify(&user.Order)
 		case 6:
 			user.CreateNewOrder()
 			user.GetOrder()
