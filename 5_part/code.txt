@@ -1,0 +1,220 @@
+========================================
+cmd/main.go
+========================================
+
+package main
+
+import (
+	"fmt"
+	"go_restart/5_part/internal/User"
+)
+
+func main() {
+	user := user.User{
+		UserName:   "Doni",
+		SurName:    "Shapkro",
+		Patronymic: "Serg",
+	}
+
+Menu:
+	for {
+		param := getMenu()
+		switch param {
+		case 1:
+			user.PrintUserInfo()
+		case 2:
+			user.GetOrder()
+		case 3:
+			user.Order.ChooseProduct()
+			user.GetOrder()
+		case 4:
+			user.Order.AddBaseOrder()
+			user.GetOrder()
+		case 5:
+			user.Order.CompleteOrder()
+			user.GetOrder()
+		case 6:
+			user.CreateNewOrder()
+			user.GetOrder()
+		case 7:
+			break Menu
+		}
+	}
+}
+
+func getMenu() int {
+	var param int
+	fmt.Println(
+		`
+		------------------------------------
+		Выберите действие с заказом:
+		- 1 Просмотр информации пользователя
+		- 2 Просмотреть информацию о заказе
+		- 3 Выбрать продукты и добавить их в заказ
+		- 4 Добавить Базовый заказ
+		- 5 Завершить заказ
+		- 6 Очистить заказ
+		- 7 Выход
+		------------------------------------
+		`)
+	fmt.Scan(&param)
+	return param
+}
+
+
+========================================
+internal/User/userMethods.go
+========================================
+
+package user
+
+import (
+	"fmt"
+	"go_restart/5_part/internal/Order"
+)
+
+type User struct {
+	UserName   string
+	SurName    string
+	Patronymic string
+	Order      order.Order
+}
+
+func (user *User) PrintUserInfo() {
+
+	if user.UserName != "" && user.SurName != "" && user.Patronymic != "" {
+		fmt.Printf("Имя пользователя: %s %s %s", user.UserName, user.SurName, user.Patronymic)
+	} else if user.UserName != "" && user.SurName != "" {
+		fmt.Printf("Имя пользователя: %s %s", user.UserName, user.SurName)
+	} else {
+		fmt.Println("Данные пользователя заполнены некорректно")
+	}
+
+}
+
+func (user *User) GetOrder() {
+	fmt.Printf("Заказ номер %d на сумму %.2f получил статус %s", user.Order.ID, user.Order.TotalPrice, user.Order.Status)
+}
+
+func (user *User) CreateNewOrder() {
+	user.Order = order.Order{}
+}
+
+
+========================================
+internal/Product/productMethods.go
+========================================
+
+package product
+
+type Product struct {
+	Name  string
+	Price float32
+}
+
+var products = []Product{
+	{
+		Name:  "Молоко",
+		Price: 110,
+	},
+	{
+		Name:  "Хлеб",
+		Price: 23.15,
+	},
+	{
+		Name:  "Макароны",
+		Price: 45.26,
+	},
+	{
+		Name:  "Соль",
+		Price: 17.34,
+	},
+	{
+		Name:  "Сахарок",
+		Price: 67.69,
+	},
+}
+
+func GetProductList() []Product {
+	return products
+}
+
+
+========================================
+internal/Order/orderMethods.go
+========================================
+
+package order
+
+import (
+	"fmt"
+	"go_restart/5_part/internal/Product"
+	"math/rand"
+)
+
+type Order struct {
+	TotalPrice float32
+	Status     string
+	ID         int
+	Products   []product.Product
+}
+
+func (o *Order) AddBaseOrder() {
+	baseProductList := product.GetProductList()
+	for _, v := range baseProductList {
+		o.TotalPrice += v.Price
+	}
+	if o.ID == 0 {
+		o.ID = rand.Intn(99999)
+	}
+	o.Status = "Ожидает подтверждения"
+	o.Products = baseProductList
+}
+
+func (o *Order) ChooseProduct() {
+	baseProductList := product.GetProductList()
+	if o.ID == 0 {
+		o.ID = rand.Intn(99999)
+	}
+Menu:
+	for {
+		param := getMenu()
+		switch param {
+		case 6:
+			o.Status = "Ожидает подтверждения"
+			break Menu
+		}
+		if param > 0 && param < 6 {
+			o.AddProductInOrder(baseProductList[param-1])
+		} else {
+			fmt.Println("Такого пункта нет в меню")
+		}
+	}
+}
+
+func (o *Order) AddProductInOrder(product product.Product) {
+	o.Products = append(o.Products, product)
+	o.TotalPrice += product.Price
+}
+
+func (o *Order) CompleteOrder() {
+	o.Status = "Завершён"
+}
+
+func getMenu() int {
+	var param int
+	fmt.Println(
+		`
+		------------------------------------
+		Выберите продукт:
+		- 1 Молоко - 110.0р
+		- 2 Хлеб - 23.15р
+		- 3 Макароны - 45.26р
+		- 4 Соль - 17.34р
+		- 5 Сахарок - 67.69р
+		- 6 Закончить выбор продуктов
+		------------------------------------
+		`)
+	fmt.Scan(&param)
+	return param
+}

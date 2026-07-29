@@ -5,29 +5,29 @@ type Product struct {
 	Price float32
 }
 
+var products = []Product{
+	{
+		Name:  "Молоко",
+		Price: 110,
+	},
+	{
+		Name:  "Хлеб",
+		Price: 23.15,
+	},
+	{
+		Name:  "Макароны",
+		Price: 45.26,
+	},
+	{
+		Name:  "Соль",
+		Price: 17.34,
+	},
+	{
+		Name:  "Сахарок",
+		Price: 67.69,
+	},
+}
+
 func GetProductList() []Product {
-	var productList []Product
-	productList = append(productList,
-		Product{
-			Name:  "Молоко",
-			Price: 110.0,
-		},
-		Product{
-			Name:  "Хлеб",
-			Price: 23.15,
-		},
-		Product{
-			Name:  "Макароны",
-			Price: 45.26,
-		},
-		Product{
-			Name:  "Соль",
-			Price: 17.34,
-		},
-		Product{
-			Name:  "Сахарок",
-			Price: 67.69,
-		},
-	)
-	return productList
+	return products
 }

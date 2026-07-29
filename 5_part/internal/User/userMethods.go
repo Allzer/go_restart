@@ -9,7 +9,7 @@ type User struct {
 	UserName   string
 	SurName    string
 	Patronymic string
-	Orders     order.Order
+	Order      order.Order
 }
 
 func (user *User) PrintUserInfo() {
@@ -25,9 +25,9 @@ func (user *User) PrintUserInfo() {
 }
 
 func (user *User) GetOrder() {
-	fmt.Printf("Заказ номер %d на сумму %.2f получил статус %s", user.Orders.ID, user.Orders.TotalPrice, user.Orders.Status)
+	fmt.Printf("Заказ номер %d на сумму %.2f получил статус %s", user.Order.ID, user.Order.TotalPrice, user.Order.Status)
 }
 
 func (user *User) CreateNewOrder() {
-	user.Orders = order.Order{}
+	user.Order = order.Order{}
 }

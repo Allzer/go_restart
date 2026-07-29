@@ -21,13 +21,13 @@ Menu:
 		case 2:
 			user.GetOrder()
 		case 3:
-			user.Orders.ChooseProduct()
+			user.Order.ChooseProduct()
 			user.GetOrder()
 		case 4:
-			user.Orders.AddBaseOrder()
+			user.Order.AddBaseOrder()
 			user.GetOrder()
 		case 5:
-			user.Orders.CompleteOrder()
+			user.Order.CompleteOrder()
 			user.GetOrder()
 		case 6:
 			user.CreateNewOrder()

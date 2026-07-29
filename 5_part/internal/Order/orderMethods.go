@@ -18,14 +18,18 @@ func (o *Order) AddBaseOrder() {
 	for _, v := range baseProductList {
 		o.TotalPrice += v.Price
 	}
-	o.ID = rand.Intn(99999)
+	if o.ID == 0 {
+		o.ID = rand.Intn(99999)
+	}
 	o.Status = "Ожидает подтверждения"
 	o.Products = baseProductList
 }
 
-func (o *Order)ChooseProduct() {
+func (o *Order) ChooseProduct() {
 	baseProductList := product.GetProductList()
-	o.ID = rand.Intn(99999)
+	if o.ID == 0 {
+		o.ID = rand.Intn(99999)
+	}
 Menu:
 	for {
 		param := getMenu()
@@ -35,16 +39,16 @@ Menu:
 			break Menu
 		}
 		if param > 0 && param < 6 {
-			addProductInOrder(o, baseProductList[param-1])
+			o.AddProductInOrder(baseProductList[param-1])
 		} else {
 			fmt.Println("Такого пункта нет в меню")
 		}
 	}
 }
 
-func addProductInOrder(order *Order, product product.Product) {
-	order.Products = append(order.Products, product)
-	order.TotalPrice += product.Price
+func (o *Order) AddProductInOrder(product product.Product) {
+	o.Products = append(o.Products, product)
+	o.TotalPrice += product.Price
 }
 
 func (o *Order) CompleteOrder() {
