@@ -1,12 +1,10 @@
-========================================
-cmd/main.go
-========================================
-
+// ===== cmd/main.go =====
 package main
 
 import (
 	"fmt"
 	"go_restart/5_part/internal/User"
+	"go_restart/5_part/internal/notifier"
 )
 
 func main() {
@@ -15,6 +13,8 @@ func main() {
 		SurName:    "Shapkro",
 		Patronymic: "Serg",
 	}
+
+	var notifierService notifier.Notifier = notifier.EmailNotifier{}
 
 Menu:
 	for {
@@ -32,7 +32,7 @@ Menu:
 			user.GetOrder()
 		case 5:
 			user.Order.CompleteOrder()
-			user.GetOrder()
+			notifierService.Notify(&user.Order)
 		case 6:
 			user.CreateNewOrder()
 			user.GetOrder()
@@ -61,11 +61,7 @@ func getMenu() int {
 	return param
 }
 
-
-========================================
-internal/User/userMethods.go
-========================================
-
+// ===== internal/User/userMethods.go =====
 package user
 
 import (
@@ -100,11 +96,7 @@ func (user *User) CreateNewOrder() {
 	user.Order = order.Order{}
 }
 
-
-========================================
-internal/Product/productMethods.go
-========================================
-
+// ===== internal/Product/productMethods.go =====
 package product
 
 type Product struct {
@@ -139,11 +131,7 @@ func GetProductList() []Product {
 	return products
 }
 
-
-========================================
-internal/Order/orderMethods.go
-========================================
-
+// ===== internal/Order/orderMethods.go =====
 package order
 
 import (
@@ -217,4 +205,29 @@ func getMenu() int {
 		`)
 	fmt.Scan(&param)
 	return param
+}
+
+// ===== internal/notifier/notifier.go =====
+package notifier
+
+import order "go_restart/5_part/internal/Order"
+
+type Notifier interface{ Notify(*order.Order) }
+
+// ===== internal/notifier/email.go =====
+package notifier
+
+import (
+	"fmt"
+	order "go_restart/5_part/internal/Order"
+)
+
+type EmailNotifier struct {}
+
+func (EmailNotifier) Notify(o *order.Order) {
+	fmt.Printf(
+		"Чек на Email. Заказ №%d завершён. Сумма заказа: %.2fр",
+		o.ID,
+		o.TotalPrice,
+	)
 }

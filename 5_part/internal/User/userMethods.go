@@ -12,7 +12,7 @@ type User struct {
 	Order      order.Order
 }
 
-func (user *User) PrintUserInfo() {
+func (user User) PrintUserInfo() {
 
 	if user.UserName != "" && user.SurName != "" && user.Patronymic != "" {
 		fmt.Printf("Имя пользователя: %s %s %s", user.UserName, user.SurName, user.Patronymic)
@@ -24,7 +24,7 @@ func (user *User) PrintUserInfo() {
 
 }
 
-func (user *User) GetOrder() {
+func (user User) GetOrder() {
 	fmt.Printf("Заказ номер %d на сумму %.2f получил статус %s", user.Order.ID, user.Order.TotalPrice, user.Order.Status)
 }
 
