@@ -13,7 +13,6 @@ func main() {
 		circle.Circle{6},
 		triangle.Triangle{3,4,5},
 	}
-	
 
 	for _, v := range figures{
 		v.Area()
