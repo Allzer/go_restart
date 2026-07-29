@@ -1,0 +1,79 @@
+=== internal/notifire/notifire.go ===
+package notifire
+
+type Notifire interface{ Notify(message string) }
+
+func SendNotification(n Notifire, message string) { n.Notify(message) }
+
+
+=== internal/console/console.go ===
+package console
+
+import "fmt"
+
+type ConsoleNotify struct{}
+
+func (ConsoleNotify) Notify(message string) {
+	fmt.Println("[Console] ", message)
+}
+
+
+=== internal/email/email.go ===
+package email
+
+import "fmt"
+
+type EmailNotificator struct{}
+
+func (EmailNotificator) Notify(message string) {
+	fmt.Println("[Email] ", message)
+}
+
+
+=== internal/sms/sms.go ===
+package sms
+
+import "fmt"
+
+type SmsNotificator struct{}
+
+func (SmsNotificator) Notify(message string) {
+	fmt.Println("[SMS] ", message)
+}
+
+
+=== internal/telegram/telegram.go ===
+package telegram
+
+import "fmt"
+
+type TelegramNotificator struct{}
+
+func (TelegramNotificator) Notify(message string) {
+	fmt.Println("[Telegram] ", message)
+}
+
+
+=== cmd/main.go ===
+package main
+
+import (
+	"go_restart/5_part_interface/internal/console"
+	"go_restart/5_part_interface/internal/email"
+	"go_restart/5_part_interface/internal/notifire"
+	"go_restart/5_part_interface/internal/sms"
+	"go_restart/5_part_interface/internal/telegram"
+)
+
+func main() {
+	notifires := []notifire.Notifire{
+		console.ConsoleNotify{},
+		email.EmailNotificator{},
+		sms.SmsNotificator{},
+		telegram.TelegramNotificator{},
+	}
+
+	for _, v := range notifires {
+		notifire.SendNotification(v, "ваш заказ готов")
+	}
+}
