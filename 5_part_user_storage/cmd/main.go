@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	var memorySt storage.UserStorage = memorystorage.MemoryStorage{}
+	var memorySt storage.UserStorage = &memorystorage.MemoryStorage{}
 	var fileSt storage.UserStorage = filestorage.FileStorage{}
 
 	user := user.User{

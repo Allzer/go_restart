@@ -6,6 +6,6 @@ type MemoryStorage struct {
 	Users []user.User
 }
 
-func (m MemoryStorage) Save(user user.User) {
+func (m *MemoryStorage) Save(user user.User) {
 	m.Users = append(m.Users, user)
 }
