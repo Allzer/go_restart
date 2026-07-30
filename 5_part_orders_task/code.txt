@@ -1,0 +1,91 @@
+// ===== cmd/main.go =====
+package main
+
+import (
+	"go_restart/5_part_orders_task/internal/bankcard"
+	"go_restart/5_part_orders_task/internal/cryptocurrency"
+	"go_restart/5_part_orders_task/internal/order"
+	"go_restart/5_part_orders_task/internal/sbp"
+)
+
+func main() {
+
+	var sbpPayment order.Payment = sbp.Sbp{}
+	var cryptocurrencyPayment order.Payment = cryptocurrency.Cryptocurrency{}
+	var bankcardPayment order.Payment = bankcard.Bankcard{}
+
+	orderNumber1 := order.Order{
+		ID: 1234,
+		TotalPrice: 5678,
+		Status: "Ожидает оплаты",
+	}
+
+	order.PayForTheOrder(sbpPayment, &orderNumber1)
+	order.PayForTheOrder(cryptocurrencyPayment, &orderNumber1)
+	order.PayForTheOrder(bankcardPayment, &orderNumber1)
+}
+
+// ===== internal/order/order.go =====
+package order
+
+type Order struct {
+	ID         int
+	TotalPrice float64
+	Status     string
+}
+
+func PayForTheOrder(p Payment, o *Order) {
+	p.Pay(o)
+}
+
+// ===== internal/order/payment.go =====
+package order
+
+type Payment interface {
+	Pay(*Order) bool
+}
+
+// ===== internal/bankcard/bankcard.go =====
+package bankcard
+
+import (
+	"fmt"
+	"go_restart/5_part_orders_task/internal/order"
+)
+
+type Bankcard struct{}
+
+func (b Bankcard) Pay(o *order.Order) bool {
+	fmt.Println("Ожидаем подключение к банку")
+	return true
+}
+
+// ===== internal/cryptocurrency/cryptocurrency.go =====
+package cryptocurrency
+
+import (
+	"fmt"
+	"go_restart/5_part_orders_task/internal/order"
+)
+
+type Cryptocurrency struct{}
+
+func (c Cryptocurrency) Pay(o *order.Order) bool {
+	fmt.Println("Ожидаем подключение к кошельку")
+	return true
+}
+
+// ===== internal/sbp/sbp.go =====
+package sbp
+
+import (
+	"fmt"
+	"go_restart/5_part_orders_task/internal/order"
+)
+
+type Sbp struct{}
+
+func (s Sbp) Pay(o *order.Order) bool {
+	fmt.Println("QR-code сгенерирован")
+	return true
+}
