@@ -2,6 +2,7 @@
 package main
 
 import (
+	"fmt"
 	"go_restart/5_part_interface_1_task/internal/circle"
 	"go_restart/5_part_interface_1_task/internal/rectangle"
 	"go_restart/5_part_interface_1_task/internal/shapeInterface"
@@ -10,14 +11,13 @@ import (
 
 func main() {
 	figures := []shapeInterface.Shape{
-		rectangle.Rectangle{4,2},
-		circle.Circle{6},
-		triangle.Triangle{3,4,5},
+		rectangle.Rectangle{A: 4, B: 2},
+		circle.Circle{R: 6},
+		triangle.Triangle{A: 3, B: 4, C: 5},
 	}
-	
 
-	for _, v := range figures{
-		v.Area()
+	for _, v := range figures {
+		fmt.Printf("Площадь равна %.2f \n", v.Area())
 	}
 }
 
@@ -25,14 +25,13 @@ func main() {
 package shapeInterface
 
 type Shape interface {
-	Area(...int)
+	Area() float32
 }
 
 // ===== internal/circle/circle.go =====
 package circle
 
 import (
-	"fmt"
 	"math"
 )
 
@@ -40,29 +39,26 @@ type Circle struct {
 	R int
 }
 
-func (c Circle) Area(...int) {
-	fmt.Println("Площадь окружности равна ", math.Pi*float64(c.R))
+func (c Circle) Area() float32 {
+	return math.Pi * float32(c.R*c.R)
 }
 
 // ===== internal/rectangle/rectangle.go =====
 package rectangle
-
-import "fmt"
 
 type Rectangle struct {
 	A int
 	B int
 }
 
-func (r Rectangle) Area(...int) {
-	fmt.Println("Площадь прямоугольника равна ", r.A*r.B)
+func (r Rectangle) Area() float32 {
+	return float32(r.A * r.B)
 }
 
 // ===== internal/triangle/triangle.go =====
 package triangle
 
 import (
-	"fmt"
 	"math"
 )
 
@@ -72,8 +68,8 @@ type Triangle struct {
 	C int
 }
 
-func (t Triangle) Area(...int) {
+func (t Triangle) Area() float32 {
 	p := (t.A+t.B+t.C)/2
 	area := math.Sqrt(float64((p*(p-t.A)*(p-t.B)*(p-t.C))))
-	fmt.Println("Площадь триугольника равна: ", area)
+	return float32(area)
 }

@@ -1,7 +1,6 @@
 package triangle
 
 import (
-	"fmt"
 	"math"
 )
 
@@ -11,8 +10,8 @@ type Triangle struct {
 	C int
 }
 
-func (t Triangle) Area(...int) {
+func (t Triangle) Area() float32 {
 	p := (t.A+t.B+t.C)/2
 	area := math.Sqrt(float64((p*(p-t.A)*(p-t.B)*(p-t.C))))
-	fmt.Println("Площадь триугольника равна: ", area)
+	return float32(area)
 }
