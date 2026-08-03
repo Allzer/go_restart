@@ -1,6 +1,8 @@
 package bank
 
-import "errors"
+import (
+	"go_restart/6_part/36_task/internal/my_errors"
+)
 
 type BankAccount struct {
 	Owner   string
@@ -9,7 +11,7 @@ type BankAccount struct {
 
 func (b *BankAccount) Deposit(ammount int) error {
 	if ammount <= 0 {
-		err := errors.New("Сумма пополнения должна быть больше 0")
+		err := myerrors.ErrInvalidAmount
 		return err
 	}
 	b.Balance += ammount
@@ -18,7 +20,7 @@ func (b *BankAccount) Deposit(ammount int) error {
 
 func (b *BankAccount) Withdraw(amount int) error {
 	if amount > b.Balance {
-		return errors.New("На балансе недостаточно средств")
+		return myerrors.ErrInsufficientАunds
 	}
 	b.Balance -= amount
 	return nil
